@@ -5,9 +5,9 @@
  * Time: 1:00
  */
 
-namespace aascms\Memcacher;
+namespace bc\memcacher;
 
-use aascms\Config\ConfigManager;
+use bc\Config\ConfigManager;
 
 class Memcacher {
 
@@ -72,7 +72,7 @@ class Memcacher {
         }
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         if(!@self::$mmc->getversion()) {
-            $cfg = ConfigManager::get('./cfg/memcache.json');
+            $cfg = ConfigManager::get('./config/memcache.json');
             self::$mmc->connect($cfg->get('host'), $cfg->get('port'));
         }
     }

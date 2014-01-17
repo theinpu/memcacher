@@ -4,7 +4,7 @@
  * Date: 20.09.13 12:48
  */
 
-namespace aascms\Memcacher;
+namespace bc\memcacher;
 
 
 class MemcacheObject {

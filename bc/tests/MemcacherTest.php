@@ -4,14 +4,14 @@
  * Date: 20.09.13 11:53
  */
 
-namespace aascms\tests\model;
+namespace bc\tests\model;
 
-use aascms\Memcacher\MemcacheObject;
-use aascms\Memcacher\Memcacher;
+use bc\memcacher\MemcacheObject;
+use bc\memcacher\Memcacher;
 
 /**
  * Class MMCTest
- * @package aascms\tests\model
+ * @package bc\tests\model
  * @requires extension memcache
  */
 class MemcacherTest extends \PHPUnit_Framework_TestCase {
