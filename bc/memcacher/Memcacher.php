@@ -7,7 +7,7 @@
 
 namespace bc\memcacher;
 
-use bc\Config\ConfigManager;
+use bc\config\ConfigManager;
 
 class Memcacher {
 
@@ -72,7 +72,7 @@ class Memcacher {
         }
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         if(!@self::$mmc->getversion()) {
-            $cfg = ConfigManager::get('./config/memcache.json');
+            $cfg = ConfigManager::get('config/memcache');
             self::$mmc->connect($cfg->get('host'), $cfg->get('port'));
         }
     }
