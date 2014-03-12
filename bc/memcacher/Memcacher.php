@@ -134,7 +134,7 @@ class Memcacher {
      *
      * @return mixed
      */
-    private static function getTaggedKeys($tag) {
+    public static function getTaggedKeys($tag) {
         $keys = self::get(self::TAGS_PREFIX . $tag);
 
         return $keys;
