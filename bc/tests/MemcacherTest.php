@@ -63,6 +63,9 @@ class MemcacherTest extends \PHPUnit_Framework_TestCase {
         foreach($vals as $val) {
             Memcacher::set($val);
         }
+        Memcacher::set($vals[0]);
+
+        $this->assertEquals(array('key1', 'key3', 'key4'), Memcacher::getTaggedKeys('tag1'));
 
         $savedVals = Memcacher::getByTag('tag1');
         $this->assertEquals(array($vals[0]->value, $vals[2]->value, $vals[3]->value), $savedVals);

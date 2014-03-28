@@ -119,7 +119,9 @@ class Memcacher {
             if(is_null($tags)) {
                 $tags = array();
             }
-            $tags[] = $object->key;
+            if (!in_array($object->key, $tags)) {
+                $tags[] = $object->key;
+            }
             self::set(new MemcacheObject(self::TAGS_PREFIX . $tag, $tags, 0));
         }
     }
