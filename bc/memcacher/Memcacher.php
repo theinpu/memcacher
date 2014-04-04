@@ -68,12 +68,18 @@ class Memcacher {
 
     private static function check() {
         if(is_null(self::$mmc)) {
-            self::$mmc = new \Memcache();
+            if(!class_exists('\Memcache')) {
+                self::$mmc = new MemcacheDummy();
+            } else {
+                self::$mmc = new \Memcache();
+            }
         }
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         if(!@self::$mmc->getversion()) {
             $cfg = ConfigManager::get('config/memcache');
-            self::$mmc->connect($cfg->get('host'), $cfg->get('port'));
+            if(!@self::$mmc->connect($cfg->get('host'), $cfg->get('port'))) {
+                self::$mmc = new MemcacheDummy();
+            }
         }
     }
 
@@ -106,7 +112,7 @@ class Memcacher {
             foreach($keys as $key) {
                 self::del($key);
             }
-            self::del(self::TAGS_PREFIX . $tag);
+            self::del(self::TAGS_PREFIX.$tag);
         }
     }
 
@@ -115,14 +121,14 @@ class Memcacher {
      */
     private static function assignTags($object) {
         foreach($object->tags as $tag) {
-            $tags = self::get(self::TAGS_PREFIX . $tag);
+            $tags = self::get(self::TAGS_PREFIX.$tag);
             if(is_null($tags)) {
                 $tags = array();
             }
-            if (!in_array($object->key, $tags)) {
+            if(!in_array($object->key, $tags)) {
                 $tags[] = $object->key;
             }
-            self::set(new MemcacheObject(self::TAGS_PREFIX . $tag, $tags, 0));
+            self::set(new MemcacheObject(self::TAGS_PREFIX.$tag, $tags, 0));
         }
     }
 
@@ -137,7 +143,7 @@ class Memcacher {
      * @return mixed
      */
     public static function getTaggedKeys($tag) {
-        $keys = self::get(self::TAGS_PREFIX . $tag);
+        $keys = self::get(self::TAGS_PREFIX.$tag);
 
         return $keys;
     }
